@@ -1,13 +1,11 @@
 import pygame
 from pygame.locals import *
-import sys
-
-sys.path.append('./model/')
-sys.path.append('./model/Boss')
-sys.path.append('./model/Entite')
-
-# sys.path.append('./assets/')
-# sys.path.append('./assets/sprites/')
+# import sys
+#
+# sys.path.append('./model/')
+# sys.path.append('./model/Boss')
+# sys.path.append('./model/Entite')
+import path
 from Boss import *
 from Entite import *
 

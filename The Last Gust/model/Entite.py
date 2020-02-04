@@ -14,6 +14,7 @@ class Entite(pygame.sprite.Sprite):
         self.image_actu = 0
         self.rect = 0
         self.direction ="bas"
+
     def estMort(self):
         if self.vie <= 0:
             return True
@@ -71,6 +72,6 @@ class Entite(pygame.sprite.Sprite):
         self.rect = self.image_actu.get_rect()
         self.rect.x = x
         self.rect.y = y
-        
-    def def subirDegats(self, degats):
+
+    def subirDegats(self, degats):
         self.vie -= degats
