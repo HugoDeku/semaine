@@ -1,5 +1,6 @@
 import pygame
 from Entite import *
+from Projectile import *
 
 class Arbalete(Entite):
 
@@ -30,8 +31,8 @@ class Arbalete(Entite):
         self.direction ="bas"
 
     def lance_projectile(self):
-        #self.tous_les_projectiles.add(Projectile())
-        pass
+        self.tous_les_projectiles.add(Projectile("fleche",self.degats,5,self.direction,self.rect.x,self.rect.y)
+
 
     def deplacer_droite(self):
         self.image_actu = self.changement_sprite("mouvement_droite")
