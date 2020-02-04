@@ -3,6 +3,7 @@ from os import *
 
 class Entite(pygame.sprite.Sprite):
 
+    #Constructeur de la class Entite
     def __init__(self, nom):
         self.root = path.dirname(__file__)
         super().__init__()
@@ -75,3 +76,5 @@ class Entite(pygame.sprite.Sprite):
 
     def subirDegats(self, degats):
         self.vie -= degats
+
+    def infligeDegat(self, entite)
