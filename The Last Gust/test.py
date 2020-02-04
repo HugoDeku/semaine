@@ -2,14 +2,8 @@ import pygame
 from pygame.locals import *
 import sys
 
-sys.path.append('./class/')
-sys.path.append('./class/Boss')
-sys.path.append('./class/Entite')
+sys.path.append('./model/')
+sys.path.append('./model/Boss')
+sys.path.append('./model/Entite')
 from Boss import *
 from Entite import *
-
-boss = Boss()
-entity = Entite()
-
-print(str(boss.vie))
-print(str(entity.vie))
