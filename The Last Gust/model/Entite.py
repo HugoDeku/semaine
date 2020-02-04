@@ -1,9 +1,10 @@
 import pygame
-
+from os import *
 
 class Entite(pygame.sprite.Sprite):
 
     def __init__(self, nom):
+        self.root = path.dirname(__file__)
         super().__init__()
         self.nom = nom
         self.vie = 1
@@ -22,15 +23,17 @@ class Entite(pygame.sprite.Sprite):
 
     def set_sprite(self, posx, posy):
         self.listes_sprites = {
-            "haut": pygame.image.load(self.path + "_haut.png"),
-            "mouvement_haut": pygame.image.load(self.path+'_mouvHaut.png'),
-            "bas": pygame.transform.rotate(self.listes_sprites["haut"], 180),
-            "mouvement_bas": pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 180),
-            "droite": pygame.transform.rotate(self.listes_sprites["bas"], 270),
-            "mouvement_droite": pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 270),
-            "gauche": pygame.transform.rotate(self.listes_sprites["bas"], 90),
-            "mouvement_gauche": pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 90),
+            "haut": pygame.image.load(path.join(self.root, self.path) + "_haut.png"),
+            "mouvement_haut": pygame.image.load(path.join(self.root, self.path)+'_mouvHaut.png'),
         }
+        self.listes_sprites.update({'bas': pygame.transform.rotate(self.listes_sprites["haut"], 180)})
+        # self.listes_sprites = AddValuesToDict('bas',self.listes_sprites, pygame.transform.rotate(self.listes_sprites["haut"], 180))
+        # self.listes_sprites = AddValuesToDict('mouvement_bas', self.listes_sprites, pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 180))
+        # self.listes_sprites = AddValuesToDict('droite' , self.listes_sprites, pygame.transform.rotate(self.listes_sprites["haut"], 270))
+        # self.listes_sprites = AddValuesToDict('mouvement_droite', self.listes_sprites, pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 270))
+        # self.listes_sprites = AddValuesToDict('gauche', self.listes_sprites, pygame.transform.rotate(self.listes_sprites["haut"], 90))
+        # self.listes_sprites = AddValuesToDict('mouvement_gauche', self.listes_sprites, pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 90))
+
         self.image_actu = self.listes_sprites["bas"]
         self.rect = self.image_actu.get_rect()
         self.rect.x = posx
