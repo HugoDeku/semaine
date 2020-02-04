@@ -27,7 +27,7 @@ class Fronde(Entite.Entite):
         self.rect.y = posy
 
     def lance_projectile(self):
-        # self.tous_les_projectiles.add(Projectile())
+        self.tous_les_projectiles.add(Projectile("caillou",self.degats,5,self.direction,self.rect.x,self.rect.y)
         pass
 
     def deplacer_droite(self):

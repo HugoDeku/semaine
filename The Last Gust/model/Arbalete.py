@@ -7,7 +7,7 @@ class Arbalete(Entite):
     def __init__(self, posx, posy):
         super().__init__()
         self.vie = 4
-        self.degat = 2
+        self.degats = 2
         self.velocite = 1
         self.tous_les_projectiles = pygame.sprite.Group()
 
