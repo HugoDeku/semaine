@@ -31,7 +31,7 @@ class Entite(pygame.sprite.Sprite):
         self.listes_sprites.update({'mouvement_bas': pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 180)})
         self.listes_sprites.update({'droite':  pygame.transform.rotate(self.listes_sprites["haut"], 270)})
         self.listes_sprites.update({'mouvement_droite':  pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 270)})
-        self.listes_sprites.update({'gauche': pygame.transform.rotate(self.listes_sprites["haut"], 90))
+        self.listes_sprites.update({'gauche': pygame.transform.rotate(self.listes_sprites["haut"], 90)})
         self.listes_sprites.update({'mouvement_gauche': pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 90)})
 
         self.image_actu = self.listes_sprites["bas"]
