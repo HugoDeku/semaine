@@ -44,28 +44,27 @@ class Entite(pygame.sprite.Sprite):
 
 
     def deplacer_droite(self):
-        self.image_actu = self.changement_sprite("mouvement_droite")
+        self.changement_sprite("mouvement_droite")
         self.rect.x += self.velocite
-        self.image_actu = self.changement_sprite("droite")
         self.direction = "droite"
 
     def deplacer_haut(self):
-        self.image_actu = self.changement_sprite("mouvement_haut")
+        self.changement_sprite("mouvement_haut")
         self.rect.y -= self.velocite
-        self.image_actu = self.changement_sprite("haut")
         self.direction = "haut"
 
     def deplacer_bas(self):
-        self.image_actu = self.changement_sprite("mouvement_bas")
+        self.changement_sprite("mouvement_bas")
         self.rect.y += self.velocite
-        self.image_actu = self.changement_sprite("bas")
         self.direction = "bas"
 
     def deplacer_gauche(self):
-        self.image_actu = self.changement_sprite("mouvement_gauche")
+        self.changement_sprite("mouvement_gauche")
         self.rect.x -= self.velocite
-        self.image_actu = self.changement_sprite("gauche")
         self.direction = "gauche"
+
+    def arret_deplacement(self):
+        self.changement_sprite(self.direction)
 
     def changement_sprite(self, nom):
         x = self.rect.x
@@ -79,4 +78,4 @@ class Entite(pygame.sprite.Sprite):
         self.vie -= degats
 
     def infligeDegat(self, entite):
-        entite.subirDegats(self.)
+        entite.subirDegats(entite.degats)

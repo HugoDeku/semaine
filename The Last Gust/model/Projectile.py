@@ -11,11 +11,11 @@ class Projectile:
         self.rect.y = posy
 
     def deplacement(self):
-        if self.direction ="bas":
+        if self.direction =="bas":
             self.rect.y += self.velocite
-        elif self.direction ="haut":
+        elif self.direction =="haut":
             self.rect.y -= self.velocite
-        elif self.direction ="gauche":
+        elif self.direction =="gauche":
             self.rect.x -= self.velocite
         else:
             self.rect.x += self.velocite
