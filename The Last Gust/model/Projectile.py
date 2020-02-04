@@ -1,3 +1,4 @@
+
 class Projectile:
 
     def __init(self, nom, degats, velocite, direction, posx, posy):
@@ -6,8 +7,6 @@ class Projectile:
         self.velocite = velocite
         self.direction = direction
         self.nom = nom
-        self.image_actu = 0
-        self.rect = self.image_actu.get_rect()
         self.rect.x = posx
         self.rect.y = posy
 
