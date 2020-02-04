@@ -1,14 +1,11 @@
-from Entite import *
-import pygame
+    class Projectile():
 
-    class Projectile(Entite.Entite):
-
-        def __init(self, sprite, degats, velocite, direction, posx, posy):
+        def __init(self, nom, degats, velocite, direction, posx, posy):
             super().__init__();
             self.degats = degats
             self.velocite = velocite
             self.direction = direction
-            self.sprite = sprite
+            self.nom = nom
             self.rect = self.image_actu.get_rect()
             self.rect.x = posx
             self.rect.y = posy

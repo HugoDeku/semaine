@@ -1,7 +1,7 @@
 from Entite import *
 
 
-class Rocher(Entite.Entite):
+class Rocher():
 
     def __init__(self, nom, posx, posy):
         super().__init__()
