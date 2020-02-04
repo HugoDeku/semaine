@@ -3,7 +3,7 @@ from Entite import *
 
 class Arbalete(Entite):
 
-    def __init(self, posx, posy):
+    def __init__(self, posx, posy):
         super().__init__()
         self.vie = 4
         self.degat = 2
@@ -18,7 +18,8 @@ class Arbalete(Entite):
             "droite": pygame.image.load('../assets/player.png'),
             "mouvement_droite": pygame.image.load('../assets/player.png'),
             "gauche": pygame.image.load('../assets/player.png'),
-            "mouvement_gauche": pygame.image.load('../assets/player.png')
+            "mouvement_gauche": pygame.image.load('../assets/player.png'),
+            "animation_attaque": pygame.image_load('../assets/player.png')
 
         }
 
