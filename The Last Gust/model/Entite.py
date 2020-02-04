@@ -1,15 +1,28 @@
 import pygame
 
+
 class Entite(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, nom):
         super().__init__()
-        self.nom = "default"
+        self.nom = nom
         self.vie = 1
         self.velocite = 1
         self.path = "../assets/sprites/" + self.nom
+        self.listes_sprites = {}
+        self.image_actu = 0
+        self.rect = 0
+        self.direction ="bas"
+    def estMort(self):
+        if self.vie <= 0:
+            return True
+
+    def attaque(self):
+        pass
+
+    def set_sprite(self, posx, posy):
         self.listes_sprites = {
-            "haut": pygame.image.load(self.path + '_haut.png'),
+            "haut": pygame.image.load(self.path + "_haut.png"),
             "mouvement_haut": pygame.image.load(self.path+'_mouvHaut.png'),
             "bas": pygame.transform.rotate(self.listes_sprites["haut"], 180),
             "mouvement_bas": pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 180),
@@ -18,18 +31,11 @@ class Entite(pygame.sprite.Sprite):
             "gauche": pygame.transform.rotate(self.listes_sprites["bas"], 90),
             "mouvement_gauche": pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 90),
         }
-
         self.image_actu = self.listes_sprites["bas"]
         self.rect = self.image_actu.get_rect()
         self.rect.x = posx
         self.rect.y = posy
-        self.direction ="bas"
-    def estMort(self):
-        if self.vie <= 0:
-            return True
 
-    def attaque(self):
-        pass
 
     def deplacer_droite(self):
         self.image_actu = self.changement_sprite("mouvement_droite")
