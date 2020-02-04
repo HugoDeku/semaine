@@ -13,3 +13,4 @@ class Entite(pygame.sprite.Sprite):
 
     def attaque(self):
         pass
+    def deplacement_haut():
