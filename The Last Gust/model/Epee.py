@@ -1,13 +1,11 @@
 from Entite import *
 import pygame
 
-class Fronde(Entite.Entite):
+class Epee(Entite.Entite):
 
-    def __init__(self, posx, posys):
+    def __init__(self, posx, posy):
         super().__init__()
-        self.vie = 4
-        self.degats = 2
-        self.tous_les_projectiles = pygame.sprite.Group()
+        self.degats= 4
 
         self.listes_sprites = {
             "haut": pygame.image.load('../assets/player.png'),
@@ -26,9 +24,8 @@ class Fronde(Entite.Entite):
         self.rect.x = posx
         self.rect.y = posy
 
-    def lance_projectile(self):
-        # self.tous_les_projectiles.add(Projectile())
-        pass
+    def attaque(self,joueur):
+        joueur.vie -= self.degats
 
     def deplacer_droite(self):
         self.image_actu = self.changement_sprite("mouvement_droite")

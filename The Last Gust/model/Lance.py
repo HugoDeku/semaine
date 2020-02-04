@@ -1,4 +1,4 @@
-import Entite.py
+from Entite import *
 import pygame
 
 class Lance(Entite.Entite):
@@ -23,6 +23,9 @@ class Lance(Entite.Entite):
         self.rect = self.image_actu.get_rect()
         self.rect.x = posx
         self.rect.y = posy
+
+    def attaque(self,joueur):
+        joueur.vie -= self.degats
 
     def deplacer_droite(self):
         self.image_actu = self.changement_sprite("mouvement_droite")
