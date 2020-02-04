@@ -1,5 +1,5 @@
 import pygame
-from Entite.py import Entite
+from Entite import *
 
 class Arbalete(Entite):
 
@@ -26,6 +26,7 @@ class Arbalete(Entite):
         self.rect = self.image_actu.get_rect()
         self.rect.x = posx
         self.rect.y = posy
+        self.direction ="bas"
 
     def lance_projectile(self):
         #self.tous_les_projectiles.add(Projectile())
@@ -35,21 +36,25 @@ class Arbalete(Entite):
         self.image_actu = self.changement_sprite("mouvement_droite")
         self.rect.x += self.velocite
         self.image_actu = self.changement_sprite("droite")
+        self.direction = "droite"
 
     def deplacer_haut(self):
         self.image_actu = self.changement_sprite("mouvement_haut")
         self.rect.y -= self.velocite
         self.image_actu = self.changement_sprite("haut")
+        self.direction = "haut"
 
     def deplacer_bas(self):
         self.image_actu = self.changement_sprite("mouvement_bas")
         self.rect.y += self.velocite
         self.image_actu = self.changement_sprite("bas")
+        self.direction = "bas"
 
     def deplacer_gauche(self):
         self.image_actu = self.changement_sprite("mouvement_gauche")
         self.rect.x -= self.velocite
         self.image_actu = self.changement_sprite("gauche")
+        self.direction = "gauche"
 
     def changement_sprite(self, nom):
         x = self.rect.x
