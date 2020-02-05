@@ -43,24 +43,29 @@ class Entite(pygame.sprite.Sprite):
         self.rect.y = posy
 
 
-    def deplacer_droite(self):
+
+    def deplacer_droite(self, possible = True):
         self.changement_sprite("mouvement_droite")
-        self.rect.x += self.velocite
+        if possible:
+            self.rect.x += self.velocite
         self.direction = "droite"
 
-    def deplacer_haut(self):
+    def deplacer_haut(self, possible = True):
         self.changement_sprite("mouvement_haut")
-        self.rect.y -= self.velocite
+        if possible:
+            self.rect.y -= self.velocite
         self.direction = "haut"
 
-    def deplacer_bas(self):
+    def deplacer_bas(self, possible = True):
         self.changement_sprite("mouvement_bas")
-        self.rect.y += self.velocite
+        if possible:
+            self.rect.y += self.velocite
         self.direction = "bas"
 
-    def deplacer_gauche(self):
+    def deplacer_gauche(self, possible = True):
         self.changement_sprite("mouvement_gauche")
-        self.rect.x -= self.velocite
+        if possible:
+            self.rect.x -= self.velocite
         self.direction = "gauche"
 
     def arret_deplacement(self):
