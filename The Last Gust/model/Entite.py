@@ -16,6 +16,8 @@ class Entite(pygame.sprite.Sprite):
         self.rect = 0
         self.direction ="bas"
         self.degats = 0
+        #facteur multiplicateur de distance
+        self.dist_Attaque = 50
 
     def estMort(self):
         if self.vie <= 0:
@@ -84,3 +86,25 @@ class Entite(pygame.sprite.Sprite):
 
     def infligeDegat(self, entite):
         entite.subirDegats(entite.degats)
+
+    def followPlayer(self, joueur):
+        print(self.peutAttaquer(joueur))
+        if not self.peutAttaquer(joueur):
+
+            dist_X = abs(self.rect.x - joueur.rect.x)
+            dist_Y = abs(self.rect.y - joueur.rect.y)
+
+            if dist_X >= dist_Y:
+                self.deplacer_droite() if (self.rect.x <= joueur.rect.x) else self.deplacer_gauche()
+            else:
+                self.deplacer_bas() if (self.rect.y <= joueur.rect.y) else self.deplacer_haut()
+
+    def peutAttaquer(self, joueur):
+        if (joueur.rect.x < self.rect.x + self.rect.width//2 and self.rect.x + self.rect.width//2 < joueur.rect.x + joueur.rect.width) and (abs(self.rect.y - joueur.rect.y) <= self.dist_Attaque):
+            self.attaque()
+            return True
+        elif (joueur.rect.y < self.rect.y + self.rect.height//2 and self.rect.y + self.rect.height//2 < joueur.rect.y + joueur.rect.height) and (abs(self.rect.x - joueur.rect.x) <= self.dist_Attaque):
+            self.attaque()
+            return True
+        else:
+            return False
