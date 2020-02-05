@@ -21,18 +21,66 @@ jeu = Jeu()
 
 #musique
 
-pygame.mixer.music.set_volume(0.3)
-pygame.mixer.music.load('assets/song/bg_music.mp3')
-pygame.mixer.music.play(-1)
+
 
 icone = pygame.image.load('assets/jacket.png')
 pygame.display.set_icon(icone)
 pygame.display.set_caption("The Last Gust")
 ecran = pygame.display.set_mode((1024,768))
+myfont = pygame.font.SysFont('Helvetic', 20)
 
+#boucle menu d'accueil
+menu = True
+
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.load('assets/song/Intro.mp3')
+pygame.mixer.music.play(-1)
+
+while menu:
+
+    
+    ecran.blit(icone, (0,0))
+
+    jouer = pygame.draw.rect(
+        ecran,
+        (0, 102, 153),
+        pygame.Rect(ecran.get_width()//2 - 100, 200, 200, 50))
+
+    score = pygame.draw.rect(
+        ecran,
+        (0, 102, 153),
+        pygame.Rect(ecran.get_width()//2 - 100, 300, 200, 50))
+    
+    text_jouer = myfont.render('JOUER', False, (255,255,255))
+
+    text_score = myfont.render('SCORE', False, (255,255,255))
+
+    ecran.blit(text_jouer,
+               (ecran.get_width()//2 - 100 + 100 - text_jouer.get_width()//2,
+                225-text_jouer.get_height() // 2 ))
+
+    ecran.blit(text_score,
+               (ecran.get_width()//2 - 100 + 100 - text_score.get_width()//2,
+                325-text_score.get_height() //2))
+    for event in pygame.event.get():
+        #event = close window
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()
+
+
+    
+
+    pygame.display.flip()
+    
+    
 
 
 #boucle jeu
+
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.load('assets/song/bg_music.mp3')
+pygame.mixer.music.play(-1)    
 
 while running:
     #appliquer background
