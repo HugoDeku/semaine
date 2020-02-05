@@ -1,24 +1,42 @@
+import pygame
+from os import *
 
-class Projectile:
+class Projectile(pygame.sprite.Sprite):
 
-    def __init(self, nom, degats, velocite, direction, posx, posy):
+    def __init__(self, joueur,  nom, degats, velocite):
         super().__init__()
+        self.nom = nom
+        self.image = pygame.image.load(path.join(path.dirname(__file__),"../assets/sprites/" + self.nom + ".png"))
+        self.rect = self.image.get_rect()
         self.degats = degats
         self.velocite = velocite
-        self.direction = direction
-        self.nom = nom
-        self.rect.x = posx
-        self.rect.y = posy
+        self.joueur = joueur
+        self.direction = self.joueur.direction
+        if self.direction =="bas":
+            self.rect.y = self.joueur.rect.y + self.joueur.rect.height + 1
+            self.rect.x = self.joueur.rect.x + self.joueur.rect.width/2 - self.rect.width/2
+        elif self.direction =="haut":
+            self.rect.y = self.joueur.rect.y - self.rect.height - 1
+            self.rect.x = self.joueur.rect.x + self.joueur.rect.width/2 - self.rect.width/2
+        elif self.direction =="gauche":
+            self.rect.y = self.joueur.rect.y + self.joueur.rect.height/2 - self.rect.height/2
+            self.rect.x = self.joueur.rect.x - self.rect.width - 1
+        else:
+            self.rect.y = self.joueur.rect.y + self.joueur.rect.height/2 - self.rect.height/2
+            self.rect.x = self.joueur.rect.x + self.joueur.rect.width + 1
 
     def deplacement(self):
-        if self.direction ="bas":
+        if self.direction =="bas":
             self.rect.y += self.velocite
-        elif self.direction ="haut":
+        elif self.direction =="haut":
             self.rect.y -= self.velocite
-        elif self.direction ="gauche":
+        elif self.direction =="gauche":
             self.rect.x -= self.velocite
         else:
             self.rect.x += self.velocite
 
-    def infligedegats(self, joueur):
-        joueur.vie -= self.degats
+    def infligedegats(self, entite):
+        entite.subirDegats(self.degats)
+        supprimer()
+        
+    

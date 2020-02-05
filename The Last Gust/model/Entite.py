@@ -16,6 +16,8 @@ class Entite(pygame.sprite.Sprite):
         self.rect = 0
         self.direction ="bas"
         self.degats = 0
+        #facteur multiplicateur de distance
+        self.dist_Attaque = 50
 
     def estMort(self):
         if self.vie <= 0:
@@ -43,29 +45,33 @@ class Entite(pygame.sprite.Sprite):
         self.rect.y = posy
 
 
-    def deplacer_droite(self):
-        self.image_actu = self.changement_sprite("mouvement_droite")
-        self.rect.x += self.velocite
-        self.image_actu = self.changement_sprite("droite")
+
+    def deplacer_droite(self, possible = True):
+        self.changement_sprite("mouvement_droite")
+        if possible:
+            self.rect.x += self.velocite
         self.direction = "droite"
 
-    def deplacer_haut(self):
-        self.image_actu = self.changement_sprite("mouvement_haut")
-        self.rect.y -= self.velocite
-        self.image_actu = self.changement_sprite("haut")
+    def deplacer_haut(self, possible = True):
+        self.changement_sprite("mouvement_haut")
+        if possible:
+            self.rect.y -= self.velocite
         self.direction = "haut"
 
-    def deplacer_bas(self):
-        self.image_actu = self.changement_sprite("mouvement_bas")
-        self.rect.y += self.velocite
-        self.image_actu = self.changement_sprite("bas")
+    def deplacer_bas(self, possible = True):
+        self.changement_sprite("mouvement_bas")
+        if possible:
+            self.rect.y += self.velocite
         self.direction = "bas"
 
-    def deplacer_gauche(self):
-        self.image_actu = self.changement_sprite("mouvement_gauche")
-        self.rect.x -= self.velocite
-        self.image_actu = self.changement_sprite("gauche")
+    def deplacer_gauche(self, possible = True):
+        self.changement_sprite("mouvement_gauche")
+        if possible:
+            self.rect.x -= self.velocite
         self.direction = "gauche"
+
+    def arret_deplacement(self):
+        self.changement_sprite(self.direction)
 
     def changement_sprite(self, nom):
         x = self.rect.x
@@ -79,4 +85,26 @@ class Entite(pygame.sprite.Sprite):
         self.vie -= degats
 
     def infligeDegat(self, entite):
-        entite.subirDegats(self.)
+        entite.subirDegats(entite.degats)
+
+    def followPlayer(self, joueur):
+        print(self.peutAttaquer(joueur))
+        if not self.peutAttaquer(joueur):
+
+            dist_X = abs(self.rect.x - joueur.rect.x)
+            dist_Y = abs(self.rect.y - joueur.rect.y)
+
+            if dist_X >= dist_Y:
+                self.deplacer_droite() if (self.rect.x <= joueur.rect.x) else self.deplacer_gauche()
+            else:
+                self.deplacer_bas() if (self.rect.y <= joueur.rect.y) else self.deplacer_haut()
+
+    def peutAttaquer(self, joueur):
+        if (joueur.rect.x < self.rect.x + self.rect.width//2 and self.rect.x + self.rect.width//2 < joueur.rect.x + joueur.rect.width) and (abs(self.rect.y - joueur.rect.y) <= self.dist_Attaque):
+            self.attaque()
+            return True
+        elif (joueur.rect.y < self.rect.y + self.rect.height//2 and self.rect.y + self.rect.height//2 < joueur.rect.y + joueur.rect.height) and (abs(self.rect.x - joueur.rect.x) <= self.dist_Attaque):
+            self.attaque()
+            return True
+        else:
+            return False
