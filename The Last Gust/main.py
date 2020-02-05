@@ -1,6 +1,6 @@
 import pygame
 from os import *
-import path
+from path import*
 from Jeu import *
 
 running = True
@@ -43,7 +43,7 @@ while running:
 
     #affichage pdv
     pdv = jeu.joueur.vie
-    debut_plume_x = ecran.get_width()/2 - 80
+    debut_plume_x = ecran.get_width()//2 - 80
     debut_plume_y = ecran.get_height() - 50
     i = 0
     while i < 3:
