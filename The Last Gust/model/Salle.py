@@ -10,8 +10,8 @@ class Salle:
         self.listes_trous = []
         self.listes_obstacle = []
 
-    def setSalle():
+    def setSalle(listes_trous, listes_obstacle):
+        self.listes_trous = listes_trous
+        self.listes_obstacle = listes_obstacle
 
-    def setTrou():
-
-    def setObstacle():
+    
