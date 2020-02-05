@@ -1,11 +1,11 @@
 import pygame
-from os import *
+import os
 
 class Entite(pygame.sprite.Sprite):
 
     #Constructeur de la class Entite
     def __init__(self, nom):
-        self.root = path.dirname(__file__)
+        self.root = os.path.dirname(__file__)
         super().__init__()
         self.nom = nom
         self.vie = 1
@@ -28,8 +28,8 @@ class Entite(pygame.sprite.Sprite):
 
     def set_sprite(self, posx, posy):
         self.listes_sprites = {
-            "haut": pygame.image.load(path.join(self.root, self.path) + "_haut.png"),
-            "mouvement_haut": pygame.image.load(path.join(self.root, self.path)+'_mouvHaut.png'),
+            "haut": pygame.image.load(os.path.join(self.root, self.path) + "_haut.png"),
+            "mouvement_haut": pygame.image.load(os.path.join(self.root, self.path)+'_mouvHaut.png'),
         }
         self.listes_sprites.update({'bas': pygame.transform.rotate(self.listes_sprites["haut"], 180)})
         self.listes_sprites.update({'bas':pygame.transform.rotate(self.listes_sprites["haut"], 180)})
