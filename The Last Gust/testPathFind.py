@@ -9,7 +9,7 @@ pygame.init()
 fenetre = pygame.display.set_mode((500,500))
 
 p1 = Boss()
-joueur = Joueur(0,100)
+joueur = Joueur(100,0)
 fond = pygame.image.load(path.join(path.dirname(__file__),"assets/sprites/bg_temp.png"))
 
 
