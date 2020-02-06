@@ -289,6 +289,7 @@ pygame.mixer.music.play(-1)
 
 numMap = 1
 salle = Salle(2)
+ite = 0
 while running:
     #appliquer background
     ecran.blit(background, (0, 0) )
@@ -299,6 +300,9 @@ while running:
         background = salle.image
         #génére les mob sur map
     for mobs in salle.liste_entite:
+        ite += 4
+        if ite == 4:
+            mobs.followPlayer(jeu.joueur)
         ecran.blit(mobs.image_actu, mobs.rect)
 
 
