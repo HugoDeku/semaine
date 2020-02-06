@@ -2,6 +2,8 @@ import pygame
 import os
 from path import*
 from Jeu import *
+from time import time
+import codecs
 
 running = True
 root = os.path.dirname(__file__)
@@ -23,7 +25,66 @@ icone = pygame.image.load('assets/jacket.png')
 pygame.display.set_icon(icone)
 pygame.display.set_caption("The Last Gust")
 ecran = pygame.display.set_mode((1024,768))
-myfont = pygame.font.SysFont('Helvetic', 20)
+myfont = pygame.font.SysFont('constantia', 20)
+
+def decoupageIntro(lignes, fichier):
+    texte = fichier.read()
+    texte = texte.replace('\n', ' ')
+    buffer = ""
+    i = 0
+
+    for c in texte:
+        if i < 100 or (not c== ' ' and not c == '.'):
+            buffer = buffer + c
+            i+=1
+        else:
+            lignes.append(buffer)
+            buffer = ""
+            i=0
+    return lignes
+
+def intro():
+    fichier = codecs.open("intro.txt","r", encoding="utf-8")
+    lignes = []
+    lignes = decoupageIntro(lignes, fichier)
+    fichier.close
+    fond_noir = pygame.image.load("assets/sprites/fond_noir.jpg")
+    running = True
+    hauteur = 50
+    decalage = 768
+    temps = None
+    while running:
+        ecran.blit(fond_noir, (0, 0))
+        passer = myfont.render("Appuyer sur espace pour passer l'introduction", False , (255, 255 ,255))
+        ecran.blit(passer, (0,0))
+        i = 0
+        while i < len(lignes):
+            ligne_ecran = myfont.render(lignes[i], False, (255, 255, 255))
+            ecran.blit(ligne_ecran,
+                        (ecran.get_width()//2 - ligne_ecran.get_width() // 2, i * hauteur + decalage))
+            i += 1
+        pygame.display.flip()
+        for event in pygame.event.get():
+            # event = close window
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                jeu.pressed[event.key] = True
+                if event.key == pygame.K_SPACE:
+                    running = False
+        if decalage > ecran.get_height() // 4:
+            decalage -= 1
+        elif temps is None:
+            temps = time()
+
+        if not temps is None:
+            if time() - temps > 10:
+                running = False
+        pygame.time.Clock().tick(120)
+
+
+
 
 def trieScore(scores):
     retour = []
@@ -87,6 +148,10 @@ def affichageScore():
 
 #musique
 
+
+intro()
+
+
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.load('assets/song/Intro.mp3')
 pygame.mixer.music.play(-1)
@@ -96,6 +161,8 @@ couleur_jouer = blue_bar
 couleur_score = blue_bar
 
 #boucle menu d'accueil
+
+
 
 def menu():
     menu = True
