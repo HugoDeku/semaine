@@ -135,14 +135,16 @@ class Entite(pygame.sprite.Sprite):
             if self.rect.colliderect(projectile.rect):
                 if projectile.nom == "tornade":
                     projectile.supprimer()
-                    centite = self.collisionEntite(liste_entites)
-                    cobstacles = self.collisionObstacles
                     if projectile.direction == "haut":
-                        for i in (1,5):
+                        i=0
+                        while i <5 and cobstacles == "non" and centite == non:
+                            centite = self.collisionEntite(liste_entites)
+                            cobstacles = self.collisionObstacles
                             deplacerhaut()
-                    #elif projectile
-                projectile.infligedegats(self)
-                subitdegats = True            
+                            i+=1
+                    else :
+                        projectile.infligedegats(self)
+                        subitdegats = True            
         return subitDegats
 
     def collisionEntite(self, liste_entites):
