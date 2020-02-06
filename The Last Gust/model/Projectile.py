@@ -1,12 +1,11 @@
 import pygame
-from os import *
-
+import os
 class Projectile(pygame.sprite.Sprite):
 
     def __init__(self, joueur,  nom, degats, velocite):
         super().__init__()
         self.nom = nom
-        self.image = pygame.image.load(path.join(path.dirname(__file__),"../assets/sprites/" + self.nom + ".png"))
+        self.image = pygame.image.load(os.path.join(os.path.dirname(__file__),"../assets/sprites/" + self.nom + ".png"))
         self.rect = self.image.get_rect()
         self.degats = degats
         self.velocite = velocite
@@ -37,6 +36,6 @@ class Projectile(pygame.sprite.Sprite):
 
     def infligedegats(self, entite):
         entite.subirDegats(self.degats)
-        supprimer()
+        os.supprimer()
         
     

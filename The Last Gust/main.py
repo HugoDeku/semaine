@@ -1,10 +1,10 @@
 import pygame
-from os import *
+import os
 from path import*
 from Jeu import *
 
 running = True
-root = path.dirname(__file__)
+root = os.path.dirname(__file__)
 
 pygame.init()
 
@@ -13,7 +13,7 @@ pv1 = pygame.transform.scale(pygame.image.load('assets/sprites/plume1.png'),(50,
 pv2 = pygame.transform.scale(pygame.image.load('assets/sprites/plume2.png'),(50,50))
 pv3 = pygame.transform.scale(pygame.image.load('assets/sprites/plume3.png'),(50,50))
 pv4 = pygame.transform.scale(pygame.image.load('assets/sprites/plume4.png'),(50,50))
-background = pygame.image.load(path.join(root, "assets/sprites/bg_temp.png"))
+background = pygame.image.load(os.path.join(root, "assets/sprites/bg_temp.png"))
 
 
 #chargement du jeu
@@ -21,18 +21,142 @@ jeu = Jeu()
 
 #musique
 
-pygame.mixer.music.set_volume(0.3)
-pygame.mixer.music.load('assets/song/bg_music.mp3')
-pygame.mixer.music.play(-1)
+
 
 icone = pygame.image.load('assets/jacket.png')
 pygame.display.set_icon(icone)
 pygame.display.set_caption("The Last Gust")
 ecran = pygame.display.set_mode((1024,768))
+myfont = pygame.font.SysFont('Helvetic', 20)
+
+def trieScore(scores):
+    retour = []
+    while len(scores) > 0:
+        meilleur = scores[0]
+        for score in scores:
+            if int(meilleur[0]) > int(score[0]):
+                meilleur = score
+        retour.append(meilleur)
+        scores.remove(meilleur)
+    return retour
+def affichageScore():
+    fichier = open("score.txt", 'r')
+    scores = []
+    for ligne in fichier:
+        ajout = ligne.replace('\n','')
+        scores.append(ajout.split(':'))
+    fichier.close()
+    scores = trieScore(scores)
+    running = True
+    while running:
+        ecran.blit(pygame.transform.scale(icone, (1024, 768)), (0, 0))
+        if 0 < pygame.mouse.get_pos()[0] < 100 and 0 < pygame.mouse.get_pos()[1] < 25:
+            couleur = vert_bar
+        else:
+            couleur = blue_bar
+        case = pygame.draw.rect(
+            ecran,
+            couleur,
+            pygame.Rect(0, 0, 100, 25))
+        retour = myfont.render('<- Menu', False, (255, 255, 255))
+        ecran.blit(retour,
+                   (75 - retour.get_width(),
+                    18 - retour.get_height()))
+        posy = 90
+        posx = ecran.get_width() // 2 - 250
+        hauteur = 588
+        largeur = 500
+        pygame.draw.rect(
+            ecran,
+            blue_bar,
+            pygame.Rect(posx, posy, largeur, hauteur))
+        i = 0
+        while i < 10 and i < len(scores):
+            posy += 20
+            score = myfont.render(str(i + 1)+ " - " + scores[i][1] + " avec un score de  " + scores[i][0] , False, (255, 255, 255))
+            ecran.blit(score,
+                       (posx + largeur//4,
+                        posy ))
+            i += 1
+
+        pygame.display.flip()
+        for event in pygame.event.get():
+            # event = close window
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur == vert_bar:
+                running = False
+                menu()
 
 
 
+
+
+#boucle menu d'accueil
+
+
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.load('assets/song/Intro.mp3')
+pygame.mixer.music.play(-1)
+blue_bar = (0, 102, 153)
+vert_bar = (0, 204, 102)
+couleur_jouer = blue_bar
+couleur_score = blue_bar
+def menu():
+    menu = True
+    while menu:
+        ecran.blit(pygame.transform.scale(icone, (1024,768)), (0,0))
+
+        pos_souris = pygame.mouse.get_pos()
+        if (200 + ecran.get_width() // 2 - 100 > pos_souris[0] > 200) and (250 > pos_souris[1] > 200):
+            couleur_jouer = vert_bar
+        else:
+            couleur_jouer = blue_bar
+        jouer = pygame.draw.rect(
+                                ecran,
+                                couleur_jouer,
+                                pygame.Rect(ecran.get_width()//2 - 100, 200, 200, 50))
+
+        if (200 + ecran.get_width() // 2 - 100 > pos_souris[0] > 200) and (350 > pos_souris[1] > 300):
+            couleur_score = vert_bar
+        else:
+            couleur_score = blue_bar
+
+        score = pygame.draw.rect(
+            ecran,
+            couleur_score,
+            pygame.Rect(ecran.get_width()//2 - 100, 300, 200, 50))
+    
+        text_jouer = myfont.render('JOUER', False, (255,255,255))
+
+        text_score = myfont.render('SCORE', False, (255,255,255))
+
+        ecran.blit(text_jouer,
+                    (ecran.get_width()//2 - 100 + 100 - text_jouer.get_width()//2,
+                    225-text_jouer.get_height() // 2 ))
+
+        ecran.blit(text_score,
+                    (ecran.get_width()//2 - 100 + 100 - text_score.get_width()//2,
+                    325-text_score.get_height() //2))
+
+        pygame.display.flip()
+        for event in pygame.event.get():
+            #event = close window
+            if event.type == pygame.QUIT:
+                menu = False
+                pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur_jouer == vert_bar:
+                menu = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur_score == vert_bar:
+                affichageScore()
+                menu = False
 #boucle jeu
+
+menu()
+pygame.mixer.music.load('assets/song/bg_music.mp3')
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.play(-1)    
 
 while running:
     #appliquer background
