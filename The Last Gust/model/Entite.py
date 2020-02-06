@@ -108,3 +108,55 @@ class Entite(pygame.sprite.Sprite):
             return True
         else:
             return False
+
+    def collisionObstacle(self, liste_obstacles):
+        #retourne bas haut gauche droite ou non en fonction de si il y a une collision et de la direction de la collision
+        for rect in liste_obstacles:
+            if self.rect.colliderect(rect):
+                if self.rect.x <= rect.x+rect.width :
+                    return "gauche"
+
+                elif self.rect.x+ self.rect.width >= rect.x:
+                    return "droite"
+
+                elif self.rect.y <= rect.y+rect.height:
+                    return "haut"
+
+                else:
+                    return "bas"
+
+            else:
+                return "non"
+
+
+    def collisionProjectile(self, liste_projectiles):
+        subitdegats = False
+        for projectile in liste_projectiles:
+            if self.rect.colliderect(projectile.rect):
+                projectile.infligedegats(self)
+                subitdegats = True            
+        return subitDegats
+
+    def collisionEntite(self, liste_entites):
+        for entite in liste_obstacles:
+            if self.rect.colliderect(entite.rect):
+                if self.rect.x <= entite.rect.x+entite.rect.width :
+                    return "gauche"
+
+                elif self.rect.x+ self.rect.width >= entite.rect.x:
+                    return "droite"
+
+                elif self.rect.y <= entite.rect.y+entite.rect.height:
+                    return "haut"
+
+                else:
+                    return "bas"
+
+            else:
+                return "non"
+
+
+
+
+        
+        
