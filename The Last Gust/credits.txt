@@ -1,0 +1,9 @@
+Team:                  Black Hole
+Developpeurs:    Zico Santo
+                            Antoine Locatelli
+                            Dorian Fabry
+                            Hugo Iteprat
+Sprites:               Dorian Fabry
+                            Hugo Iteprat
+Musiques:         Antoine Locatelli
+Merci à Nicolas Gimbert étudiant à l'UQAC
