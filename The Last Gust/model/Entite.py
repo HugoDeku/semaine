@@ -26,6 +26,9 @@ class Entite(pygame.sprite.Sprite):
     def attaque(self):
         pass
 
+    def mourir(self, liste_entite):
+        liste_entite.remove(self)
+    
     def set_sprite(self, posx, posy):
         self.listes_sprites = {
             "haut": pygame.image.load(os.path.join(self.root, self.path) + "_haut.png"),
@@ -187,7 +190,10 @@ class Entite(pygame.sprite.Sprite):
                 return "non"
 
 
-
+    def collisionTrou(self, liste_trous):
+        for rect in liste_trous:
+            if self.rect.colliderect(rect):
+                self.mourir()
 
         
         
