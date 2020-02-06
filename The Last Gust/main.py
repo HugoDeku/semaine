@@ -4,6 +4,8 @@ from path import*
 from Jeu import *
 from time import time
 import codecs
+from setSalles import *
+from Salle import *
 
 running = True
 root = os.path.dirname(__file__)
@@ -211,7 +213,6 @@ vert_bar = (0, 204, 102)
 #boucle menu d'accueil
 
 
-
 def menu():
     menu = True
     while menu:
@@ -286,9 +287,21 @@ pygame.mixer.music.load('assets/song/bg_music.mp3')
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.play(-1)
 
+numMap = 1
+salle = Salle(2)
 while running:
     #appliquer background
     ecran.blit(background, (0, 0) )
+
+    #générer la bonne map
+    if not salle.num == numMap:
+        salle = takeMap(numMap)
+        background = salle.image
+        #génére les mob sur map
+    for mobs in salle.liste_entite:
+        ecran.blit(mobs.image_actu, mobs.rect)
+
+
 
     #appliquer le joueur
     ecran.blit(jeu.joueur.image_actu, jeu.joueur.rect)
