@@ -253,7 +253,7 @@ while running:
     for projectile in jeu.joueur.projectiles:
         projectile.deplacement()
         projectile.image = pygame.transform.flip(projectile.image, True, False)
-        if projectile.rect.x < 0 or projectile.rect.x > ecran.get_width() or projectile.rect.y < 0 or projectile.rect.y > ecran.get_height():
+        if projectile.rect.x + projectile.rect.width < 0 or projectile.rect.x > ecran.get_width() or projectile.rect.y + projectile.rect.height < 0 or projectile.rect.y > ecran.get_height():
             jeu.joueur.projectiles.remove(projectile)
 
     jeu.joueur.projectiles.draw(ecran)
