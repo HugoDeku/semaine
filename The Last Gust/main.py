@@ -27,14 +27,64 @@ pygame.display.set_caption("The Last Gust")
 ecran = pygame.display.set_mode((1024,768))
 myfont = pygame.font.SysFont('constantia', 20)
 
-def decoupageIntro(lignes, fichier):
+def credits():
+    credits_lignes = []
+    with codecs.open("credits.txt", 'r',encoding="utf-8") as fichier:
+        for line in fichier:
+            ligne = line.replace('\n', '')
+            credits_lignes.append(ligne)
+            if'str' in line:
+                break
+
+
+    running = True
+    while running:
+        ecran.blit(pygame.transform.scale(icone, (1024, 768)), (0, 0))
+        if 0 < pygame.mouse.get_pos()[0] < 100 and 0 < pygame.mouse.get_pos()[1] < 25:
+            couleur = vert_bar
+        else:
+            couleur = blue_bar
+        case = pygame.draw.rect(
+            ecran,
+            couleur,
+            pygame.Rect(0, 0, 100, 25))
+        retour = myfont.render('<- Menu', False, (255, 255, 255))
+        ecran.blit(retour,
+                   (75 - retour.get_width(),
+                    18 - retour.get_height()))
+        posy = 90
+        posx = ecran.get_width() // 2 - 250
+        hauteur = 588
+        largeur = 500
+        pygame.draw.rect(ecran,blue_bar,pygame.Rect(posx, posy, largeur, hauteur))
+        posy = posy +20
+        i = 0
+        while i < len(credits_lignes):
+            crd = myfont.render(credits_lignes[i], False, (255, 255, 255))
+            ecran.blit(crd, (posx+20, posy))
+            i = i + 1
+            posy += 50
+
+
+        pygame.display.flip()
+        for event in pygame.event.get():
+            # event = close window
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur == vert_bar:
+                running = False
+                menu()
+    pass
+
+def decoupageIntro(lignes, fichier, taille_ligne = 100):
     texte = fichier.read()
     texte = texte.replace('\n', ' ')
     buffer = ""
     i = 0
 
     for c in texte:
-        if i < 100 or (not c== ' ' and not c == '.'):
+        if i < taille_ligne or (not c== ' ' and not c == '.'):
             buffer = buffer + c
             i+=1
         else:
@@ -157,8 +207,6 @@ pygame.mixer.music.load('assets/song/Intro.mp3')
 pygame.mixer.music.play(-1)
 blue_bar = (0, 102, 153)
 vert_bar = (0, 204, 102)
-couleur_jouer = blue_bar
-couleur_score = blue_bar
 
 #boucle menu d'accueil
 
@@ -189,9 +237,21 @@ def menu():
             couleur_score,
             pygame.Rect(ecran.get_width()//2 - 100, 300, 200, 50))
 
+        if (200 + ecran.get_width() // 2 - 100 > pos_souris[0] > 200) and (450 > pos_souris[1] > 400):
+            couleur_credits = vert_bar
+        else:
+            couleur_credits = blue_bar
+
+        credits_menu = pygame.draw.rect(
+            ecran,
+            couleur_credits,
+            pygame.Rect(ecran.get_width()//2 - 100, 400, 200, 50))
+
         text_jouer = myfont.render('JOUER', False, (255,255,255))
 
         text_score = myfont.render('SCORE', False, (255,255,255))
+
+        text_credits = myfont.render('CREDITS', False, (255,255,255))
 
         ecran.blit(text_jouer,
                     (ecran.get_width()//2 - 100 + 100 - text_jouer.get_width()//2,
@@ -200,6 +260,10 @@ def menu():
         ecran.blit(text_score,
                     (ecran.get_width()//2 - 100 + 100 - text_score.get_width()//2,
                     325-text_score.get_height() //2))
+
+        ecran.blit(text_credits,
+                   (ecran.get_width() // 2 - 100 + 100 - text_credits.get_width() // 2,
+                    425 - text_credits.get_height() // 2))
 
         pygame.display.flip()
         for event in pygame.event.get():
@@ -211,6 +275,9 @@ def menu():
                 menu = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur_score == vert_bar:
                 affichageScore()
+                menu = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur_credits == vert_bar:
+                credits()
                 menu = False
 #boucle jeu
 
