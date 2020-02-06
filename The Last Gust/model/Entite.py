@@ -46,9 +46,70 @@ class Entite(pygame.sprite.Sprite):
         self.rect.x = posx
         self.rect.y = posy
 
+    def collisionObstacle(self, liste_obstacles, liste_troue):
+        #retourne bas haut gauche droite ou non en fonction de si il y a une collision et de la direction de la collision
+        for rect in liste_obstacles:
+            if self.rect.colliderect(rect):
+                if self.rect.x <= rect.x+rect.width :
+                    return "gauche"
+
+                elif self.rect.x+ self.rect.width >= rect.x:
+                    return "droite"
+
+                elif self.rect.y <= rect.y+rect.height:
+                    return "haut"
+
+                else:
+                    return "bas"
+
+            else:
+                for trou in liste_troue:
+                    if self.rect.colliderect(rect):
+                        if self.rect.x <= rect.x+rect.width :
+                            return "gauche"
+
+                        elif self.rect.x+ self.rect.width >= rect.x:
+                            return "droite"
+
+                        elif self.rect.y <= rect.y+rect.height:
+                            return "haut"
+
+                        elif self.rect.y+ self.rect.width >= rect.y:
+                            return "bas"
+                        else :
+                            return "non"
 
 
-    def deplacer_droite(self, possible = True):
+
+    def followPlayer(self, joueur, list_obstacle, liste_troue):
+        if not self.peutAttaquer(joueur):
+            dist_X = abs(self.rect.x - joueur.rect.x)
+            dist_Y = abs(self.rect.y - joueur.rect.y)
+
+            if dist_X >= dist_Y:
+                if(self.rect.x <= joueur.rect.x):
+                    self.deplacer_droite(not self.collisionObstacle(list_obstacle, liste_troue) == "droite")
+                elif (self.rect.x > joueur.rect.x):
+                    self.deplacer_gauche(not self.collisionObstacle(list_obstacle, liste_troue) == "gauche")
+                elif (self.rect.y <= joueur.rect.y):
+                    self.deplacer_bas(not self.collisionObstacle(list_obstacle, liste_troue) == "bas")
+                elif (self.rect.y > joueur.rect.y):
+                    self.deplacer_haut(not self.collisionObstacle(list_obstacle, liste_troue) == "haut")
+                else:
+                    self.arret_deplacement()
+            else:
+                if (self.rect.y <= joueur.rect.y):
+                    self.deplacer_bas(not self.collisionObstacle(list_obstacle, liste_troue) == "bas")
+                elif (self.rect.y > joueur.rect.y):
+                    self.deplacer_haut(not self.collisionObstacle(list_obstacle, liste_troue) == "haut")
+                elif(self.rect.x <= joueur.rect.x):
+                    self.deplacer_droite(not self.collisionObstacle(list_obstacle, liste_troue) == "droite")
+                elif (self.rect.x > joueur.rect.x):
+                    self.deplacer_gauche(not self.collisionObstacle(list_obstacle, liste_troue) == "gauche")
+                else:
+                    self.arret_deplacement()
+
+    def deplacer_droite(self, possible):
         self.changement_sprite("mouvement_droite")
         if possible:
             self.rect.x += self.velocite
@@ -72,6 +133,7 @@ class Entite(pygame.sprite.Sprite):
             self.rect.x -= self.velocite
         self.direction = "gauche"
 
+
     def arret_deplacement(self):
         self.changement_sprite(self.direction)
 
@@ -89,18 +151,6 @@ class Entite(pygame.sprite.Sprite):
     def infligeDegat(self, entite):
         entite.subirDegats(entite.degats)
 
-    def followPlayer(self, joueur):
-        print(self.peutAttaquer(joueur))
-        if not self.peutAttaquer(joueur):
-
-            dist_X = abs(self.rect.x - joueur.rect.x)
-            dist_Y = abs(self.rect.y - joueur.rect.y)
-
-            if dist_X >= dist_Y:
-                self.deplacer_droite() if (self.rect.x <= joueur.rect.x) else self.deplacer_gauche()
-            else:
-                self.deplacer_bas() if (self.rect.y <= joueur.rect.y) else self.deplacer_haut()
-
     def peutAttaquer(self, joueur):
         if (joueur.rect.x < self.rect.x + self.rect.width//2 and self.rect.x + self.rect.width//2 < joueur.rect.x + joueur.rect.width) and (abs(self.rect.y - joueur.rect.y) <= self.dist_Attaque):
             self.attaque()
@@ -111,24 +161,7 @@ class Entite(pygame.sprite.Sprite):
         else:
             return False
 
-    def collisionObstacle(self, liste_obstacles):
-        #retourne bas haut gauche droite ou non en fonction de si il y a une collision et de la direction de la collision
-        for rect in liste_obstacles:
-            if self.rect.colliderect(rect):
-                if self.rect.x <= rect.x+rect.width :
-                    return "gauche"
 
-                elif self.rect.x+ self.rect.width >= rect.x:
-                    return "droite"
-
-                elif self.rect.y <= rect.y+rect.height:
-                    return "haut"
-
-                else:
-                    return "bas"
-
-            else:
-                return "non"
 
 
     def collisionProjectile(self, liste_projectiles,liste_entites,liste_obstacles):
