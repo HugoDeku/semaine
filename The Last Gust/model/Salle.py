@@ -9,6 +9,7 @@ class Salle:
         #list de rectangle dans lesquelle le joueur tombe
         self.listes_trous = []
         self.listes_obstacle = []
+        self.liste_entite = []
 
     def setSalle(listes_trous, listes_obstacle):
         self.listes_trous = listes_trous

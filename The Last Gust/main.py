@@ -249,7 +249,7 @@ while running:
 
         debut_plume_x = debut_plume_x + 55
         i += 1
-
+    #Gestion projectile joueur
     for projectile in jeu.joueur.projectiles:
         projectile.deplacement()
         projectile.image = pygame.transform.flip(projectile.image, True, False)
@@ -258,6 +258,7 @@ while running:
 
     jeu.joueur.projectiles.draw(ecran)
 
+    #Déplacement joueur
     if jeu.pressed.get(pygame.K_RIGHT):
         jeu.joueur.deplacer_droite(jeu.joueur.rect.x + jeu.joueur.rect.width < ecran.get_width())
     elif jeu.pressed.get(pygame.K_LEFT):
@@ -269,6 +270,8 @@ while running:
 
     if not jeu.pressed.get(pygame.K_RIGHT) and not jeu.pressed.get(pygame.K_LEFT) and not jeu.pressed.get(pygame.K_UP) and not jeu.pressed.get(pygame.K_DOWN) :
         jeu.joueur.arret_deplacement()
+
+    #Gestion Salles
 
     #maj ecran
     pygame.display.flip()
