@@ -37,5 +37,10 @@ class Projectile(pygame.sprite.Sprite):
     def infligedegats(self, entite):
         entite.subirDegats(self.degats)
         os.supprimer()
+
+    def collisionObstacle(self, liste_obstacles):
+        for rect in liste_obstacles:
+            if self.rect.colliderect(rect):
+                os.supprimer()
         
     
