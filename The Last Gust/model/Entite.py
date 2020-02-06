@@ -28,14 +28,13 @@ class Entite(pygame.sprite.Sprite):
 
     def mourir(self, liste_entite):
         liste_entite.remove(self)
-    
+
     def set_sprite(self, posx, posy):
         self.listes_sprites = {
-            "haut": pygame.image.load(os.path.join(self.root, self.path) + "_haut.png"),
-            "mouvement_haut": pygame.image.load(os.path.join(self.root, self.path)+'_mouvHaut.png'),
+            "haut": pygame.image.load(os.path.join(self.root, self.path) + ".png"),
+            "mouvement_haut": pygame.image.load(os.path.join(self.root, self.path)+'_mouvement.png'),
         }
         self.listes_sprites.update({'bas': pygame.transform.rotate(self.listes_sprites["haut"], 180)})
-        self.listes_sprites.update({'bas':pygame.transform.rotate(self.listes_sprites["haut"], 180)})
         self.listes_sprites.update({'mouvement_bas': pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 180)})
         self.listes_sprites.update({'droite':  pygame.transform.rotate(self.listes_sprites["haut"], 270)})
         self.listes_sprites.update({'mouvement_droite':  pygame.transform.rotate(self.listes_sprites["mouvement_haut"], 270)})
@@ -168,7 +167,7 @@ class Entite(pygame.sprite.Sprite):
                             i+=1
                 else :
                     projectile.infligedegats(self)
-                    subitdegats = True            
+                    subitdegats = True
         return subitDegats
 
     def collisionEntite(self, liste_entites):
@@ -194,6 +193,3 @@ class Entite(pygame.sprite.Sprite):
         for rect in liste_trous:
             if self.rect.colliderect(rect):
                 self.mourir()
-
-        
-        

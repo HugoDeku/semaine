@@ -1,34 +1,17 @@
 from Entite import *
 import pygame
 
-class Fronde(Entite.Entite):
+class Fronde(Entite):
 
-    def __init__(self, posx, posys):
-        super().__init__()
+    def __init__(self, posx, posy):
+        super().__init__("Fronde")
         self.vie = 4
         self.degats = 2
         self.tous_les_projectiles = pygame.sprite.Group()
-
-        self.listes_sprites = {
-            "haut": pygame.image.load('../assets/player.png'),
-            "mouvement_haut": pygame.image.load('../assets/player.png'),
-            "bas": pygame.image.load('../assets/player.png'),
-            "mouvement_bas": pygame.image.load('../assets/player.png'),
-            "droite": pygame.image.load('../assets/player.png'),
-            "mouvement_droite": pygame.image.load('../assets/player.png'),
-            "gauche": pygame.image.load('../assets/player.png'),
-            "mouvement_gauche": pygame.image.load('../assets/player.png')
-
-        }
-
-        self.image_actu = self.listes_sprites["bas"]
-        self.rect = self.image_actu.get_rect()
-        self.rect.x = posx
-        self.rect.y = posy
+        super().set_sprite(posx, posy)
 
     def lance_projectile(self):
-        self.tous_les_projectiles.add(Projectile("caillou",self.degats,5,self.direction,self.rect.x,self.rect.y)
-        pass
+        self.tous_les_projectiles.add(Projectile("caillou",self.degats,5,self.direction,self.rect.x,self.rect.y))
 
     def deplacer_droite(self):
         self.image_actu = self.changement_sprite("mouvement_droite")

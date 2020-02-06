@@ -1,28 +1,28 @@
 from Entite import *
 import pygame
 
-class Lance(Entite.Entite):
+class Lance(Entite):
 
     def __init__(self, posx, posy):
-        super().__init__()
+        super().__init__("Lance")
         self.degats= 4
 
-        self.listes_sprites = {
-            "haut": pygame.image.load('../assets/player.png'),
-            "mouvement_haut": pygame.image.load('../assets/player.png'),
-            "bas": pygame.image.load('../assets/player.png'),
-            "mouvement_bas": pygame.image.load('../assets/player.png'),
-            "droite": pygame.image.load('../assets/player.png'),
-            "mouvement_droite": pygame.image.load('../assets/player.png'),
-            "gauche": pygame.image.load('../assets/player.png'),
-            "mouvement_gauche": pygame.image.load('../assets/player.png')
+#         self.listes_sprites = {
+#             "haut": pygame.image.load('../assets/player.png'),
+#             "mouvement_haut": pygame.image.load('../assets/player.png'),
+#             "bas": pygame.image.load('../assets/player.png'),
+#             "mouvement_bas": pygame.image.load('../assets/player.png'),
+#             "droite": pygame.image.load('../assets/player.png'),
+#             "mouvement_droite": pygame.ima1/.png
+# santosz@pc-dg-039-02:~/github/semaine/The Last Gust$
+# ge.load('../assets/player.png'),
+#             "gauche": pygame.image.load('../assets/player.png'),
+#             "mouvement_gauche": pygame.image.load('../assets/player.png')
+#
+#         }
 
-        }
-
-        self.image_actu = self.listes_sprites["bas"]
-        self.rect = self.image_actu.get_rect()
-        self.rect.x = posx
-        self.rect.y = posy
+        # self.image_actu = self.listes_sprites["bas"]
+        super().set_sprite(posx, posy)
 
     def attaque(self,joueur):
         joueur.vie -= self.degats
