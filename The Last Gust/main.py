@@ -19,10 +19,6 @@ background = pygame.image.load(os.path.join(root, "assets/sprites/bg_temp.png"))
 #chargement du jeu
 jeu = Jeu()
 
-#musique
-
-
-
 icone = pygame.image.load('assets/jacket.png')
 pygame.display.set_icon(icone)
 pygame.display.set_caption("The Last Gust")
@@ -89,12 +85,7 @@ def affichageScore():
                 running = False
                 menu()
 
-
-
-
-
-#boucle menu d'accueil
-
+#musique
 
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.load('assets/song/Intro.mp3')
@@ -103,6 +94,9 @@ blue_bar = (0, 102, 153)
 vert_bar = (0, 204, 102)
 couleur_jouer = blue_bar
 couleur_score = blue_bar
+
+#boucle menu d'accueil
+
 def menu():
     menu = True
     while menu:
@@ -127,7 +121,7 @@ def menu():
             ecran,
             couleur_score,
             pygame.Rect(ecran.get_width()//2 - 100, 300, 200, 50))
-    
+
         text_jouer = myfont.render('JOUER', False, (255,255,255))
 
         text_score = myfont.render('SCORE', False, (255,255,255))
@@ -156,7 +150,7 @@ def menu():
 menu()
 pygame.mixer.music.load('assets/song/bg_music.mp3')
 pygame.mixer.music.set_volume(0.3)
-pygame.mixer.music.play(-1)    
+pygame.mixer.music.play(-1)
 
 while running:
     #appliquer background
