@@ -6,6 +6,4 @@ class Boss(Entite):
         super().__init__("Boss")
         self.vie = 50
         self.velocite = 2
-        super().set_sprite(10, 10)
-
-    
+        super().set_sprite(384, 192)
