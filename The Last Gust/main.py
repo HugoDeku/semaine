@@ -2,6 +2,8 @@ import pygame
 import os
 from path import*
 from Jeu import *
+from time import time
+import codecs
 
 running = True
 root = os.path.dirname(__file__)
@@ -23,7 +25,116 @@ icone = pygame.image.load('assets/jacket.png')
 pygame.display.set_icon(icone)
 pygame.display.set_caption("The Last Gust")
 ecran = pygame.display.set_mode((1024,768))
-myfont = pygame.font.SysFont('Helvetic', 20)
+myfont = pygame.font.SysFont('constantia', 20)
+
+def credits():
+    credits_lignes = []
+    with codecs.open("credits.txt", 'r',encoding="utf-8") as fichier:
+        for line in fichier:
+            ligne = line.replace('\n', '')
+            credits_lignes.append(ligne)
+            if'str' in line:
+                break
+
+
+    running = True
+    while running:
+        ecran.blit(pygame.transform.scale(icone, (1024, 768)), (0, 0))
+        if 0 < pygame.mouse.get_pos()[0] < 100 and 0 < pygame.mouse.get_pos()[1] < 25:
+            couleur = vert_bar
+        else:
+            couleur = blue_bar
+        case = pygame.draw.rect(
+            ecran,
+            couleur,
+            pygame.Rect(0, 0, 100, 25))
+        retour = myfont.render('<- Menu', False, (255, 255, 255))
+        ecran.blit(retour,
+                   (75 - retour.get_width(),
+                    18 - retour.get_height()))
+        posy = 90
+        posx = ecran.get_width() // 2 - 250
+        hauteur = 588
+        largeur = 500
+        pygame.draw.rect(ecran,blue_bar,pygame.Rect(posx, posy, largeur, hauteur))
+        posy = posy +20
+        i = 0
+        while i < len(credits_lignes):
+            crd = myfont.render(credits_lignes[i], False, (255, 255, 255))
+            ecran.blit(crd, (posx+20, posy))
+            i = i + 1
+            posy += 50
+
+
+        pygame.display.flip()
+        for event in pygame.event.get():
+            # event = close window
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur == vert_bar:
+                running = False
+                menu()
+    pass
+
+def decoupageIntro(lignes, fichier, taille_ligne = 100):
+    texte = fichier.read()
+    texte = texte.replace('\n', ' ')
+    buffer = ""
+    i = 0
+
+    for c in texte:
+        if i < taille_ligne or (not c== ' ' and not c == '.'):
+            buffer = buffer + c
+            i+=1
+        else:
+            lignes.append(buffer)
+            buffer = ""
+            i=0
+    return lignes
+
+def intro():
+    fichier = codecs.open("intro.txt","r", encoding="utf-8")
+    lignes = []
+    lignes = decoupageIntro(lignes, fichier)
+    fichier.close
+    fond_noir = pygame.image.load("assets/sprites/fond_noir.jpg")
+    running = True
+    hauteur = 50
+    decalage = 768
+    temps = None
+    while running:
+        ecran.blit(fond_noir, (0, 0))
+        passer = myfont.render("Appuyer sur espace pour passer l'introduction", False , (255, 255 ,255))
+        ecran.blit(passer, (0,0))
+        i = 0
+        while i < len(lignes):
+            ligne_ecran = myfont.render(lignes[i], False, (255, 255, 255))
+            ecran.blit(ligne_ecran,
+                        (ecran.get_width()//2 - ligne_ecran.get_width() // 2, i * hauteur + decalage))
+            i += 1
+        pygame.display.flip()
+        for event in pygame.event.get():
+            # event = close window
+            if event.type == pygame.QUIT:
+                running = False
+                pygame.quit()
+            elif event.type == pygame.KEYDOWN:
+                jeu.pressed[event.key] = True
+                if event.key == pygame.K_SPACE:
+                    running = False
+        if decalage > ecran.get_height() // 4:
+            decalage -= 1
+        elif temps is None:
+            temps = time()
+
+        if not temps is None:
+            if time() - temps > 10:
+                running = False
+        pygame.time.Clock().tick(120)
+
+
+
 
 def trieScore(scores):
     retour = []
@@ -87,15 +198,19 @@ def affichageScore():
 
 #musique
 
+
+intro()
+
+
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.load('assets/song/Intro.mp3')
 pygame.mixer.music.play(-1)
 blue_bar = (0, 102, 153)
 vert_bar = (0, 204, 102)
-couleur_jouer = blue_bar
-couleur_score = blue_bar
 
 #boucle menu d'accueil
+
+
 
 def menu():
     menu = True
@@ -122,9 +237,21 @@ def menu():
             couleur_score,
             pygame.Rect(ecran.get_width()//2 - 100, 300, 200, 50))
 
+        if (200 + ecran.get_width() // 2 - 100 > pos_souris[0] > 200) and (450 > pos_souris[1] > 400):
+            couleur_credits = vert_bar
+        else:
+            couleur_credits = blue_bar
+
+        credits_menu = pygame.draw.rect(
+            ecran,
+            couleur_credits,
+            pygame.Rect(ecran.get_width()//2 - 100, 400, 200, 50))
+
         text_jouer = myfont.render('JOUER', False, (255,255,255))
 
         text_score = myfont.render('SCORE', False, (255,255,255))
+
+        text_credits = myfont.render('CREDITS', False, (255,255,255))
 
         ecran.blit(text_jouer,
                     (ecran.get_width()//2 - 100 + 100 - text_jouer.get_width()//2,
@@ -133,6 +260,10 @@ def menu():
         ecran.blit(text_score,
                     (ecran.get_width()//2 - 100 + 100 - text_score.get_width()//2,
                     325-text_score.get_height() //2))
+
+        ecran.blit(text_credits,
+                   (ecran.get_width() // 2 - 100 + 100 - text_credits.get_width() // 2,
+                    425 - text_credits.get_height() // 2))
 
         pygame.display.flip()
         for event in pygame.event.get():
@@ -144,6 +275,9 @@ def menu():
                 menu = False
             elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur_score == vert_bar:
                 affichageScore()
+                menu = False
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and couleur_credits == vert_bar:
+                credits()
                 menu = False
 #boucle jeu
 
@@ -186,7 +320,7 @@ while running:
     for projectile in jeu.joueur.projectiles:
         projectile.deplacement()
         projectile.image = pygame.transform.flip(projectile.image, True, False)
-        if projectile.rect.x < 0 or projectile.rect.x > ecran.get_width() or projectile.rect.y < 0 or projectile.rect.y > ecran.get_height():
+        if projectile.rect.x + projectile.rect.width < 0 or projectile.rect.x > ecran.get_width() or projectile.rect.y + projectile.rect.height < 0 or projectile.rect.y > ecran.get_height():
             jeu.joueur.projectiles.remove(projectile)
 
     jeu.joueur.projectiles.draw(ecran)
