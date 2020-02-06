@@ -17,7 +17,9 @@ pv1 = pygame.transform.scale(pygame.image.load('assets/sprites/plume1.png'),(50,
 pv2 = pygame.transform.scale(pygame.image.load('assets/sprites/plume2.png'),(50,50))
 pv3 = pygame.transform.scale(pygame.image.load('assets/sprites/plume3.png'),(50,50))
 pv4 = pygame.transform.scale(pygame.image.load('assets/sprites/plume4.png'),(50,50))
-background = pygame.image.load(os.path.join(root, "assets/sprites/bg_temp.png"))
+background = pygame.image.load(os.path.join(root, "assets/sprites/fond_noir.jpg"))
+accueil = pygame.image.load(os.path.join(root, "assets/maps/accueil.png"))
+
 
 
 #chargement du jeu
@@ -41,7 +43,7 @@ def credits():
 
     running = True
     while running:
-        ecran.blit(pygame.transform.scale(icone, (1024, 768)), (0, 0))
+        ecran.blit(accueil, (0, 0))
         if 0 < pygame.mouse.get_pos()[0] < 100 and 0 < pygame.mouse.get_pos()[1] < 25:
             couleur = vert_bar
         else:
@@ -158,7 +160,7 @@ def affichageScore():
     scores = trieScore(scores)
     running = True
     while running:
-        ecran.blit(pygame.transform.scale(icone, (1024, 768)), (0, 0))
+        ecran.blit(accueil, (0, 0))
         if 0 < pygame.mouse.get_pos()[0] < 100 and 0 < pygame.mouse.get_pos()[1] < 25:
             couleur = vert_bar
         else:
@@ -216,10 +218,10 @@ vert_bar = (0, 204, 102)
 def menu():
     menu = True
     while menu:
-        ecran.blit(pygame.transform.scale(icone, (1024,768)), (0,0))
+        ecran.blit(accueil, (0,0))
 
         pos_souris = pygame.mouse.get_pos()
-        if (200 + ecran.get_width() // 2 - 100 > pos_souris[0] > 200) and (250 > pos_souris[1] > 200):
+        if (ecran.get_width() // 2 - 100 < pos_souris[0] < ecran.get_width() // 2 + 100) and (250 > pos_souris[1] > 200):
             couleur_jouer = vert_bar
         else:
             couleur_jouer = blue_bar
@@ -228,7 +230,7 @@ def menu():
                                 couleur_jouer,
                                 pygame.Rect(ecran.get_width()//2 - 100, 200, 200, 50))
 
-        if (200 + ecran.get_width() // 2 - 100 > pos_souris[0] > 200) and (350 > pos_souris[1] > 300):
+        if (ecran.get_width() // 2 - 100 < pos_souris[0] < ecran.get_width() // 2 + 100) and (350 > pos_souris[1] > 300):
             couleur_score = vert_bar
         else:
             couleur_score = blue_bar
@@ -238,7 +240,7 @@ def menu():
             couleur_score,
             pygame.Rect(ecran.get_width()//2 - 100, 300, 200, 50))
 
-        if (200 + ecran.get_width() // 2 - 100 > pos_souris[0] > 200) and (450 > pos_souris[1] > 400):
+        if (ecran.get_width() // 2 - 100 < pos_souris[0] < ecran.get_width() // 2 + 100) and (450 > pos_souris[1] > 400):
             couleur_credits = vert_bar
         else:
             couleur_credits = blue_bar
