@@ -137,14 +137,35 @@ class Entite(pygame.sprite.Sprite):
                     projectile.supprimer()
                     if projectile.direction == "haut":
                         i=0
-                        while i <5 and cobstacles == "non" and centite == non:
+                        while i <5 and cobstacles == "non" and centite == "non":
                             centite = self.collisionEntite(liste_entites)
                             cobstacles = self.collisionObstacles
-                            deplacerhaut()
+                            deplacer_haut()
                             i+=1
-                    else :
-                        projectile.infligedegats(self)
-                        subitdegats = True            
+                    elif projectile.direction== "bas":
+                        i=0
+                        while i <5 and cobstacles == "non" and centite == "non":
+                            centite = self.collisionEntite(liste_entites)
+                            cobstacles = self.collisionObstacles
+                            deplacer_bas()
+                            i+=1
+                    elif projectile.direction=="gauche":
+                        i=0
+                        while i <5 and cobstacles == "non" and centite == "non":
+                            centite = self.collisionEntite(liste_entites)
+                            cobstacles = self.collisionObstacles
+                            deplacer_gauche()
+                            i+=1
+                    else:
+                        i=0
+                        while i <5 and cobstacles == "non" and centite == "non":
+                            centite = self.collisionEntite(liste_entites)
+                            cobstacles = self.collisionObstacles
+                            deplacer_droite()
+                            i+=1
+                else :
+                    projectile.infligedegats(self)
+                    subitdegats = True            
         return subitDegats
 
     def collisionEntite(self, liste_entites):
