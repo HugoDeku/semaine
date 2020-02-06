@@ -46,6 +46,10 @@ def setSalle1():
     liste_trous.append(Rect((4*largeur+10, 7*hauteur+10), (4*latgeur-10, 1*hauteur-10)))
 
     #Génération des obstacles
+    liste_obstacle.append(Rect((0*largeur,0*hauteur),(18, 768)))
+    liste_obstacle.append(Rect((8*largeur-18,0*hauteur), (18,768)))
+    liste_obstacle.append(Rect((0*largeur,0*hauteur),(1024,18)))
+    liste_obstacle.append(Rect((0*largeur,8*hauteur-18),(1024,18)))
 
     #Génération entite
     liste_entite.extend([Lance(2*largeur-25, 2*hauteur-70),
