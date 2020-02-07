@@ -30,6 +30,9 @@ def setSalle1():
     hauteur = 96
     taille_mur = (largeur,hauteur)
 
+    #porteSuivante salle
+
+
     #Génération des troueeees
     #Coin de la salle
     liste_trous.append(Rect((0*largeur, 0*hauteur), taille_mur))
